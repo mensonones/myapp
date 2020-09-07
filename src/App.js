@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import { RequestImages } from './services/requestImages/index';
+
 function App() {
+  // const res = useFetch("http://www.splashbase.co/api/v1/images/random", {});
+  const res = RequestImages();
+  if (!res.response) {
+    return <div>Loading...</div>
+  }
+  const siteName = res.response.site
+  const imageUrl = res.response.large_url
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <h3>{siteName}</h3>
+        <div>
+          <img src={imageUrl} alt="avatar" style={{ width: 300 }}/>
+        </div>
+      </div>
     </div>
   );
 }
